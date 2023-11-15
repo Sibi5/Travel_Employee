@@ -68,7 +68,7 @@ public class TravelRequestController {
 	//GET BY EMPLOYEE ID 
     // http://localhost:8081/travelRequests/requestbyemployee/2
     @RequestMapping(value="requestbyemployee/{employeeId}", method=RequestMethod.GET)
-    public TravelRequests getTravelRequestByEmployeeId(@PathVariable int employeeId) {
+    public List<TravelRequests>  getTravelRequestByEmployeeId(@PathVariable int employeeId) {
         return travelRequestService.getTravelRequestByEmployeeId(employeeId);
     }
 

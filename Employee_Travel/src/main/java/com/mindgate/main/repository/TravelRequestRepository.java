@@ -111,9 +111,9 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	}
 	
 	@Override
-    public TravelRequests getTravelRequestByEmployeeId(int employeeId){
+    public List<TravelRequests> getTravelRequestByEmployeeId(int employeeId){
         TravelRequestRowMapper travelRequestRowMapper = new TravelRequestRowMapper();
-        return jdbcTemplate.queryForObject(GET_TRAVEL_REQUEST_BY_EMPLOYEE_ID, travelRequestRowMapper , employeeId);
+        return jdbcTemplate.query(GET_TRAVEL_REQUEST_BY_EMPLOYEE_ID, travelRequestRowMapper , employeeId);
     }
 
 }
