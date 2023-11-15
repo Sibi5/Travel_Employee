@@ -3,6 +3,7 @@ package com.mindgate.main.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mindgate.main.domain.TravelRequests;
 import com.mindgate.main.service.TravelRequestServiceInterface;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("travelRequests")
 public class TravelRequestController {
@@ -62,5 +64,12 @@ public class TravelRequestController {
 	public boolean deleteTravelRequestById(@PathVariable int travelRequestId) {
 		return travelRequestService.deleteTravelRequestById(travelRequestId);
 	}
+	
+	//GET BY EMPLOYEE ID 
+    // http://localhost:8081/travelRequests/requestbyemployee/2
+    @RequestMapping(value="requestbyemployee/{employeeId}", method=RequestMethod.GET)
+    public TravelRequests getTravelRequestByEmployeeId(@PathVariable int employeeId) {
+        return travelRequestService.getTravelRequestByEmployeeId(employeeId);
+    }
 
 }

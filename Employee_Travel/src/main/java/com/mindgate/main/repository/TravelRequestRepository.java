@@ -14,7 +14,8 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private static String CREATE_REQUEST_QUERY = "insert into travel_requests values(travel_request_id_sequence.nextVal,?,?,?,?,?,?,?,?,?,empty_blob(),empty_blob(),?,systimestamp,systimestamp)";
+//	private static String CREATE_REQUEST_QUERY = "insert into travel_requests values(travel_request_id_sequence.nextVal,?,?,?,?,?,?,?,?,?,empty_blob(),empty_blob(),?,systimestamp,systimestamp)";
+	private static String CREATE_REQUEST_QUERY = "insert into travel_requests values(travel_request_id_sequence.nextVal,?,?,?,?,?,'pending','pending','approved',?,empty_blob(),empty_blob(),?,systimestamp,systimestamp, ?)";
 	private static String UPDATE_QUERY = "update travel_requests set boarding_point=?,destination=?,from_date=?,to_date=?, manager_approval=?,agent_approval=?,director_approval=?,estimate=?,document_status=?, updated_at= systimestamp where travel_request_id = ?";
 //	private String UPDATE_QUERY_1st = "update travel_requests set ";
 
@@ -23,15 +24,15 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	private static String GET_ALL_REQUESTS_QUERY = "select * from TRAVEL_REQUESTS inner join EMPLOYEES e on travel_requests.employee_id = e.EMPLOYEE_ID inner join SLAB s on s.SLAB_ID = e.SLAB_ID";
 	private static String DELETE_QUERY = "delete from travel_requests where travel_request_id=?";
 	
+	private static String GET_TRAVEL_REQUEST_BY_EMPLOYEE_ID="select * from TRAVEL_REQUESTS join EMPLOYEES using (EMPLOYEE_ID) join SLAB using (SLAB_ID) where EMPLOYEE_ID=?";
+	
 	
 
 	@Override
 	public boolean createNewTravelRequest(TravelRequests travel_Requests) {
 		Object[] parameters = { travel_Requests.getEmployees().getEmployeeId(), travel_Requests.getBoardingPoint(),
 				travel_Requests.getDestination(), travel_Requests.getFromDate(), travel_Requests.getToDate(),
-				travel_Requests.getManagerApproval(), travel_Requests.getAgentApproval(),
-				travel_Requests.getDirectorApproval(), travel_Requests.getEstimate(),
-				travel_Requests.getDocumentStatus() };
+				travel_Requests.getEstimate(),travel_Requests.getDocumentStatus(), travel_Requests.getTransportationMode() };
 		int rowCount = jdbcTemplate.update(CREATE_REQUEST_QUERY, parameters);
 		if (rowCount > 0)
 			return true;
@@ -108,5 +109,11 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 		else
 			return false;
 	}
+	
+	@Override
+    public TravelRequests getTravelRequestByEmployeeId(int employeeId){
+        TravelRequestRowMapper travelRequestRowMapper = new TravelRequestRowMapper();
+        return jdbcTemplate.queryForObject(GET_TRAVEL_REQUEST_BY_EMPLOYEE_ID, travelRequestRowMapper , employeeId);
+    }
 
 }

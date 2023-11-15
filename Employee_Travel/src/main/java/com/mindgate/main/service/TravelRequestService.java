@@ -43,5 +43,9 @@ public class TravelRequestService implements TravelRequestServiceInterface {
 	public TravelRequests updateRequest(TravelRequests travel_Requests) {
 		return travelRequestRepository.updateRequest(travel_Requests);
 	}
+	
+	 public TravelRequests getTravelRequestByEmployeeId(int employeeId) {
+		 return travelRequestRepository.getTravelRequestByEmployeeId(employeeId);
+	 }
 
 }

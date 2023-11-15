@@ -13,4 +13,6 @@ public interface TravelRequestServiceInterface {
 	public boolean deleteTravelRequestById(int travelRequestId);
 	
 	public TravelRequests updateRequest(TravelRequests travel_Requests);
+	
+	 public TravelRequests getTravelRequestByEmployeeId(int employeeId);
 }
