@@ -19,30 +19,29 @@ public class AgentService implements AgentServiceInterface {
 
 		return agentRepositoryInterface.addNewAgent(agent);
 	}
-	
 
 	@Override
 	public Agents updateAgent(Agents agent) {
-		// TODO Auto-generated method stub
+// TODO Auto-generated method stub
 		return agentRepositoryInterface.updateAgent(agent);
 
 	}
 
 	@Override
 	public boolean deleteAgent(int AgentId) {
-		// TODO Auto-generated method stub
+// TODO Auto-generated method stub
 		return agentRepositoryInterface.deleteAgent(AgentId);
 	}
 
 	@Override
 	public Agents getAgentByAgentId(int AgentID) {
-		// TODO Auto-generated method stub
+// TODO Auto-generated method stub
 		return agentRepositoryInterface.getAgentByAgentId(AgentID);
 	}
 
 	@Override
 	public List<Agents> getAllAgent() {
-		// TODO Auto-generated method stub
+// TODO Auto-generated method stub
 		return agentRepositoryInterface.getAllAgent();
 
 	}
@@ -51,33 +50,37 @@ public class AgentService implements AgentServiceInterface {
 	public Agents Login(Agents agents) {
 
 		Agents agentsFromDb = agentRepositoryInterface.getAgentByAgentMail(agents.getAgentEmail());
-		
-			if (agentsFromDb==null) {                        		//Wrong user id
-//				System.out.println("Wrong user id");                   
+
+		if (agentsFromDb == null) { // Wrong user id
+			agents.setAgentPassword("");
+			return agents;
+		} else {
+			if (agentsFromDb.getAgentLogincount() > 2) { // User Blocked
+				agents.setAgentLogincount(agentsFromDb.getAgentLogincount() + 1);
+				agentsFromDb = agentRepositoryInterface.updateStatus(agentsFromDb,"blocked");
+				System.out.println(".."+agentsFromDb);
+				agents.setAgentPassword("");
+				agents.setLoginStatus("blocked");
 				return agents;
 			} else {
-				if (agentsFromDb.getAgentLogincount() > 2) {		//User Blocked
-//					System.out.println("User Blocked");                
-					agents.setAgentLogincount(agentsFromDb.getAgentLogincount()+1);
+				if (agents.getAgentPassword().equals(agentsFromDb.getAgentPassword())) { // Correct Password
+					agentsFromDb.setLoginStatus("active");
+					agentRepositoryInterface.resetAgentCount(agentsFromDb);
+					agentRepositoryInterface.updateStatus(agentsFromDb,"active");
+					agentsFromDb = agentRepositoryInterface.getAgentByAgentMail(agentsFromDb.getAgentEmail());
+					agentsFromDb.setAgentPassword("");
+					return agentsFromDb;
+				} else { // Invalid Password
+					agentsFromDb = agentRepositoryInterface.updateAgentCount(agentsFromDb);
+					agents.setAgentLogincount(agentsFromDb.getAgentLogincount() + 1);
+					agents.setAgentPassword("");
 					return agents;
-				} else {
-					if (agents.getAgentPassword().equals(agentsFromDb.getAgentPassword())) { //Correct Password
-//						System.out.println("Correct Password");		
-						agentsFromDb.setLoginStatus("active");
-						agentsFromDb.setAgentPassword("");
-//						agentRepositoryInterface.resetAgentCount(agentsFromDb);
-						return agentsFromDb;
-					} else {										//Invalid Password
-//						System.out.println("Invalid password");       
-						agentRepositoryInterface.updateAgentCount(agentsFromDb);
-						agents.setAgentLogincount(agentsFromDb.getAgentLogincount()+1);
-						return agents;
-					}
+
 				}
-
 			}
-		
-	}
 
+		}
+
+	}
 
 }

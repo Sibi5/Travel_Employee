@@ -13,6 +13,6 @@ public interface AgentRepositoryInterface {
 	public List<Agents>getAllAgent();
 	public Agents updateAgentCount(Agents agents);
 	public Agents getAgentByAgentMail(String agentEmail);
-//	 public Agents resetAgentCount(Agents agents);
+	public Agents resetAgentCount(Agents agents);
 	
 }
