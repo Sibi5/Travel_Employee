@@ -15,4 +15,6 @@ public interface TravelRequestRepositoryInterface {
 	public TravelRequests updateRequest(TravelRequests travel_Requests);
 	
 	 public List<TravelRequests>  getTravelRequestByEmployeeId(int employeeId);
+	 
+	 
 }

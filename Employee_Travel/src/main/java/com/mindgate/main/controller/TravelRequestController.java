@@ -71,5 +71,10 @@ public class TravelRequestController {
     public List<TravelRequests>  getTravelRequestByEmployeeId(@PathVariable int employeeId) {
         return travelRequestService.getTravelRequestByEmployeeId(employeeId);
     }
+    
+    @RequestMapping(value = "requestsbyemployees/{managerId}", method = RequestMethod.GET)
+    public List<TravelRequests> getTravelRequestByManagerId(@PathVariable int managerId){
+    	return travelRequestService.getTravelRequestByManagerId(managerId);
+    }
 
 }

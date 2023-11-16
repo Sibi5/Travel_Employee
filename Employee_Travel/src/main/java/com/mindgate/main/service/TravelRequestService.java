@@ -1,5 +1,6 @@
 package com.mindgate.main.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +49,16 @@ public class TravelRequestService implements TravelRequestServiceInterface {
 		 return travelRequestRepository.getTravelRequestByEmployeeId(employeeId);
 	 }
 
+	 @Override
+	 public List<TravelRequests> getTravelRequestByManagerId(int managerId){
+		 List<TravelRequests> allRequests =travelRequestRepository.getAllTravelRequests();
+		 List<TravelRequests> requestsForManager = new ArrayList<TravelRequests>();
+		 for (TravelRequests travelRequests : allRequests) {
+			if(travelRequests.getEmployees().getManagerId() == managerId && travelRequests.getManagerApproval().equalsIgnoreCase("pending")) {
+				requestsForManager.add(travelRequests);
+			}
+		}
+		 
+		 return requestsForManager;
+	 }
 }
