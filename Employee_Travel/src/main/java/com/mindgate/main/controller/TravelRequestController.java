@@ -72,6 +72,8 @@ public class TravelRequestController {
         return travelRequestService.getTravelRequestByEmployeeId(employeeId);
     }
     
+    //GET BY MANAGER ID 
+    // http://localhost:8081/travelRequests/requestsbyemployees/2
     @RequestMapping(value = "requestsbyemployees/{managerId}", method = RequestMethod.GET)
     public List<TravelRequests> getTravelRequestByManagerId(@PathVariable int managerId){
     	return travelRequestService.getTravelRequestByManagerId(managerId);
