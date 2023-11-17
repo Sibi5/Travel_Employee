@@ -78,5 +78,12 @@ public class TravelRequestController {
     public List<TravelRequests> getTravelRequestByManagerId(@PathVariable int managerId){
     	return travelRequestService.getTravelRequestByManagerId(managerId);
     }
+    
+    //GET BY MANANGER APPROVAL
+    //http://localhost:8081/travelRequests/requestbyaapproval/approved
+    @RequestMapping(value="requestbyaapproval/{managerApproval}", method=RequestMethod.GET)
+    public List<TravelRequests> getTravelRequestByManagerApproval(@PathVariable String managerApproval){
+    	return travelRequestService.getTravelRequestByManagerApproval(managerApproval);
+    }
 
 }
