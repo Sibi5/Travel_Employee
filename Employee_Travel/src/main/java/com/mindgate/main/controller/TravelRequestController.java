@@ -79,12 +79,12 @@ public class TravelRequestController {
     	return travelRequestService.getTravelRequestByManagerId(managerId);
     }
     
-    //GET BY MANANGER APPROVAL  
+    //GET BY MANANGER APPROVAL
     //For Agent Page
     //http://localhost:8081/travelRequests/requestbyaapproval/agentApproval
     @RequestMapping(value="requestbyaapproval/{agentApproval}", method=RequestMethod.GET)
     public List<TravelRequests> getTravelRequestByManagerApproval(@PathVariable String agentApproval){
-    	return travelRequestService.getTravelRequestByManagerApproval(agentApproval);
+    	return travelRequestService.getTravelRequestByManagerApproval(agentApproval.toLowerCase());
     }
     
     
