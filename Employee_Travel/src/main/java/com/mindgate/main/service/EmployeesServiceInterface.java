@@ -14,5 +14,6 @@ public interface EmployeesServiceInterface {
 	public Employees getEmployeeByEmployeeId(int employeeId);
 	public List<Employees> getAllEmployees();
 	public Employees login(Employees employees);
+	public boolean employeeLogout(int employeeId);
 
 }

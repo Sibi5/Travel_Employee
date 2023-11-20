@@ -15,4 +15,5 @@ public interface EmployeesRepositoryInterface {
 	public List<Employees> getAllEmployees();
 	public boolean updateCount(int count, String email);
 	public Employees getEmployeeByEmail(String email);
+	public boolean employeeLogout(int employeeId);
 }

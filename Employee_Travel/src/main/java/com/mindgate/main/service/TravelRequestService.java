@@ -50,11 +50,11 @@ public class TravelRequestService implements TravelRequestServiceInterface {
 	 }
 
 	 @Override
-	 public List<TravelRequests> getTravelRequestByManagerId(int managerId){
+	 public List<TravelRequests> getTravelRequestByManagerId(String managerApproval ,int managerId){
 		 List<TravelRequests> allRequests =travelRequestRepository.getAllTravelRequests();
 		 List<TravelRequests> requestsForManager = new ArrayList<TravelRequests>();
 		 for (TravelRequests travelRequests : allRequests) {
-			if(travelRequests.getEmployees().getManagerId() == managerId && travelRequests.getManagerApproval().equalsIgnoreCase("pending")) {
+			if(travelRequests.getEmployees().getManagerId() == managerId && travelRequests.getManagerApproval().equalsIgnoreCase(managerApproval)) {
 				requestsForManager.add(travelRequests);
 			}
 		}

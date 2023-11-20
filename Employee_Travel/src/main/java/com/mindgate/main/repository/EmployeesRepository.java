@@ -22,6 +22,7 @@ public class EmployeesRepository implements EmployeesRepositoryInterface {
 	private final static String SELECT_ONE_EMPLOYEE="select * from employees join slab using (slab_id) where employee_id=?";
 	private final static String SELECT_ONE_EMPLOYEE_BY_EMAIL="select * from employees join slab using (slab_id) where email=?";
 	private final static String UPDATE_LOGIN_COUNT = "update employees set count=?, login_status=? where email=?";
+	private final static String LOGOUT_QUERY = "update employees set login_status='inactive' where employee_id=?";
 	
 	@Override
 	public List<Employees> getAllEmployees() {
@@ -102,7 +103,18 @@ public class EmployeesRepository implements EmployeesRepositoryInterface {
 			return null;
 		}
 	}
+
 	
+	@Override
+	public boolean employeeLogout(int employeeId) {
+		int rowCount = jdbcTemplate.update(LOGOUT_QUERY, employeeId);
+		if (rowCount > 0)
+            return true;
+        else
+            return false;
+	}
+	
+
 
 		
 }

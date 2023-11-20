@@ -76,4 +76,9 @@ public class EmployeesService implements EmployeesServiceInterface {
 		
 	}
 
+	@Override
+	public boolean employeeLogout(int employeeId){
+		return employeesRepositoryInterface.employeeLogout(employeeId);
+	}
+
 }

@@ -72,14 +72,14 @@ public class TravelRequestController {
         return travelRequestService.getTravelRequestByEmployeeId(employeeId);
     }
     
-    //GET BY MANAGER ID 
-    // http://localhost:8081/travelRequests/requestsbyemployees/2
-    @RequestMapping(value = "requestsbyemployees/{managerId}", method = RequestMethod.GET)
-    public List<TravelRequests> getTravelRequestByManagerId(@PathVariable int managerId){
-    	return travelRequestService.getTravelRequestByManagerId(managerId);
+    //GET BY MANAGER ID AND APPROVAL
+    // http://localhost:8081/travelRequests/requestsbyemployees/Pending/2
+    @RequestMapping(value = "requestsbyemployees/{managerApproval}/{managerId}", method = RequestMethod.GET)
+    public List<TravelRequests> getTravelRequestByManagerId(@PathVariable String managerApproval ,@PathVariable int managerId){
+    	return travelRequestService.getTravelRequestByManagerId(managerApproval, managerId);
     }
     
-    //GET BY MANANGER APPROVAL
+    //GET BY AGENT APPROVAL
     //For Agent Page
     //http://localhost:8081/travelRequests/requestbyaapproval/agentApproval
     @RequestMapping(value="requestbyaapproval/{agentApproval}", method=RequestMethod.GET)

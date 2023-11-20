@@ -71,5 +71,11 @@ public class EmployeesController {
                 	return employeesServiceInterface.login(employees);
                 }
 				
+                //LOGOUT
+             // http://localhost:8081/employee/logout/1
+                @RequestMapping(value="employee/logout/{employeeId}", method = RequestMethod.GET)
+                public boolean employeeLogout(@PathVariable int employeeId) {
+                	return employeesServiceInterface.employeeLogout(employeeId);
+                }
 	
 }
