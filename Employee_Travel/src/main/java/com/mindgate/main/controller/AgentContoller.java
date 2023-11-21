@@ -69,4 +69,10 @@ public class AgentContoller {
 		return agentServiceInterface.Login(agents);
 	}
 	
+	 //LOGOUT
+    // http://localhost:8081/agentapi/logout/1
+       @RequestMapping(value="logout/{agentId}", method = RequestMethod.GET)
+       public boolean employeeLogout(@PathVariable int agentId) {
+       	return agentServiceInterface.agentLogout(agentId);
+       }
 }

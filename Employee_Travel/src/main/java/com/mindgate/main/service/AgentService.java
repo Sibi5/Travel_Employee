@@ -83,4 +83,10 @@ public class AgentService implements AgentServiceInterface {
 
 	}
 
+	
+	@Override
+	public boolean agentLogout(int agentId) {
+		return agentRepositoryInterface.agentLogout(agentId);
+	}
+
 }

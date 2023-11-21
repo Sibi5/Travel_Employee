@@ -14,5 +14,5 @@ public interface AgentRepositoryInterface {
 	public Agents updateAgentCount(Agents agents);
 	public Agents getAgentByAgentMail(String agentEmail);
 	public Agents resetAgentCount(Agents agents);
-	
+	public boolean agentLogout(int agentId);
 }

@@ -11,6 +11,7 @@ public interface AgentServiceInterface {
 	public Agents getAgentByAgentId(int AgentID);
 	public List<Agents>getAllAgent();
 	public Agents Login(Agents agents);
+	public boolean agentLogout(int agentId);
 
 	
 }

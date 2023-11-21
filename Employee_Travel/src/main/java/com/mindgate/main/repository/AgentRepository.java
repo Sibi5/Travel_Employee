@@ -21,10 +21,15 @@ public class AgentRepository implements AgentRepositoryInterface {
 	private final static String DELETE_EXISTING_AGENT = "delete from agents where agent_id=?";
 	private final static String SELECT_ALL_AGENT = "select * from agents";
 	private final static String SELECT_ONE_AGENT = "select * from agents where agent_id=?";
+	
+	private final static String SELECT_ONE_AGENT_MAIL = "select * from agents where email=?";
+	
 	private final static String UPDATE_COUNT = "update agents set count=count+1 where email=?";
 	private final static String RESET_COUNT = "update agents set count=0 where email=?";
-	private final static String SELECT_ONE_AGENT_MAIL = "select * from agents where email=?";
 	private final static String LOGIN_STATUS = "update agents set login_status=? where email=?";
+	private final static String LOGOUT_STATUS = "update agents set login_status='inactive' where agent_id=?";
+
+	
 
 //( agent_id,agent_name,email,agent_password,login_status,count)
 
@@ -133,5 +138,16 @@ public class AgentRepository implements AgentRepositoryInterface {
 		}
 		
 
+	}
+
+	public boolean agentLogout(int agentId) {
+		Object[] parameter = { agentId };
+
+		int rowCount = jdbcTemplate.update(LOGOUT_STATUS, parameter);
+		if (rowCount > 0)
+			return true;
+		else {
+			return false;
+		}
 	}
 }
