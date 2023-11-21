@@ -17,5 +17,9 @@ public interface TravelRequestServiceInterface {
 	 public List<TravelRequests> getTravelRequestByEmployeeId(int employeeId);
 	 public List<TravelRequests> getTravelRequestByManagerId(String managerApproval, int managerId);
 	 
-	 public List<TravelRequests>getTravelRequestByManagerApproval(String agentApproval);
+	 public List<TravelRequests>getTravelRequestByAgentApproval(String agentApproval);
+	 
+	 public List<TravelRequests> getTravelRequestsForDirector(String directorApproval);
+	 
+	 public List<TravelRequests> getRequestsReadyForBooking();
 }

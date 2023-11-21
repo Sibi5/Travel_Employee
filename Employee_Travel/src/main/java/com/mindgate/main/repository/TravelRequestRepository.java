@@ -28,7 +28,10 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	
 	private static String GET_TRAVEL_REQUEST_BY_MANAGER_APPROAL="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where manager_approval='approved' and agent_approval=?";
 	
+	private static String GET_TRAVEL_REQUEST_BY_AGENT_REJECTED="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval='rejected' and director_approval=?";
 	
+	private static String GET_TRAVEL_REQUESTS_READY_FOR_BOOKING="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval!='pending' and director_approval='approved'";
+
 
 	@Override
 	public boolean createNewTravelRequest(TravelRequests travel_Requests) {
@@ -118,9 +121,25 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
         return jdbcTemplate.query(GET_TRAVEL_REQUEST_BY_EMPLOYEE_ID, travelRequestRowMapper , employeeId);
     }
 	
-	public List<TravelRequests>getTravelRequestByManagerApproval(String agentApproval){
+	@Override
+	public List<TravelRequests>getTravelRequestByAgentApproval(String agentApproval){
 		TravelRequestRowMapper travelRequestRowMapper = new TravelRequestRowMapper();
 		return jdbcTemplate.query(GET_TRAVEL_REQUEST_BY_MANAGER_APPROAL, travelRequestRowMapper, agentApproval);
 	}
+
+	@Override
+	public List<TravelRequests> getTravelRequestsForDirector(String directorApproval) {
+		TravelRequestRowMapper travelRequestRowMapper = new TravelRequestRowMapper();
+		return jdbcTemplate.query(GET_TRAVEL_REQUEST_BY_AGENT_REJECTED, travelRequestRowMapper, directorApproval);
+	}
+
+	@Override
+	public List<TravelRequests> getRequestsReadyForBooking() {
+		TravelRequestRowMapper travelRequestRowMapper = new TravelRequestRowMapper();
+		return jdbcTemplate.query(GET_TRAVEL_REQUESTS_READY_FOR_BOOKING, travelRequestRowMapper);
+	}
+	
+	
+	
 
 }

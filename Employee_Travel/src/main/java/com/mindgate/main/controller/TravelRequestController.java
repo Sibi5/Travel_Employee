@@ -81,11 +81,24 @@ public class TravelRequestController {
     
     //GET BY AGENT APPROVAL
     //For Agent Page
-    //http://localhost:8081/travelRequests/requestbyaapproval/agentApproval
-    @RequestMapping(value="requestbyaapproval/{agentApproval}", method=RequestMethod.GET)
-    public List<TravelRequests> getTravelRequestByManagerApproval(@PathVariable String agentApproval){
-    	return travelRequestService.getTravelRequestByManagerApproval(agentApproval.toLowerCase());
+    //http://localhost:8081/travelRequests/requestbyAgentapproval/agentApproval
+    @RequestMapping(value="requestbyAgentapproval/{agentApproval}", method=RequestMethod.GET)
+    public List<TravelRequests> getTravelRequestByAgentApproval(@PathVariable String agentApproval){
+    	return travelRequestService.getTravelRequestByAgentApproval(agentApproval.toLowerCase());
+    }
+    
+  //GET BY AGENT  REJECTION 
+    //For DIRECTOR Page
+    //http://localhost:8081/travelRequests/requestbyManagerapproval/agentApproval
+    @RequestMapping(value="requestbyManagerapproval/{directorApproval}", method=RequestMethod.GET)
+    public List<TravelRequests> getTravelRequestsForDirector(@PathVariable String directorApproval){
+    	return travelRequestService.getTravelRequestsForDirector(directorApproval.toLowerCase());
     }
     
     
+    //http://localhost:8081/travelRequests/readyForBooking
+    @RequestMapping(value="readyForBooking", method=RequestMethod.GET)
+    public List<TravelRequests> getRequestsReadyForBooking(){
+    	return travelRequestService.getRequestsReadyForBooking();
+    }
 }

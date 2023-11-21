@@ -62,7 +62,18 @@ public class TravelRequestService implements TravelRequestServiceInterface {
 		 return requestsForManager;
 	 }
 	 
-	 public List<TravelRequests>getTravelRequestByManagerApproval(String agentApproval){
-		 return travelRequestRepository.getTravelRequestByManagerApproval(agentApproval);
+	 @Override
+	 public List<TravelRequests>getTravelRequestByAgentApproval(String agentApproval){
+		 return travelRequestRepository.getTravelRequestByAgentApproval(agentApproval);
 	 }
+	 
+	 @Override
+	 public List<TravelRequests> getTravelRequestsForDirector(String directorApproval){
+		 return travelRequestRepository.getTravelRequestsForDirector(directorApproval);
+	 }
+
+	@Override
+	public List<TravelRequests> getRequestsReadyForBooking() {
+		return travelRequestRepository.getRequestsReadyForBooking();
+	}
 }
