@@ -14,7 +14,7 @@ public class BookingsRepository implements BookingsRepositoryInterface{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private final static String INSERT_NEW_BOOKING = "insert into BOOKINGS values(booking_id_sequence.nextVal,?,?,?,?,?,?,?,?,?,empty_Blob(),?)";
+	private final static String INSERT_NEW_BOOKING = "insert into BOOKINGS values(booking_id_sequence.nextVal,?,?,?,?,?,?,?,?,empty_Blob())";
     
 	private final static String UPDATE_EXISTING_BOOKING = "update BOOKINGS set hotel_name=?,hotel_location=?,check_in_time=?,check_out_time=?,transportation_mode=?,flight_ticket=?,bus_ticket=?,train_pnr=?,ticket=?,forex=? where booking_id=?" ;
     
@@ -33,12 +33,11 @@ public class BookingsRepository implements BookingsRepositoryInterface{
 				bookings.getHotelLocation(),
 				bookings.getCheckInTime(),
 				bookings.getCheckOutTime(),
-				bookings.getTransportationMode(),
 				bookings.getFlightTicket(),
 				bookings.getBusTicket(),
 				bookings.getTrainPnr(),
-//				bookings.getTicket(),
-				bookings.getForex()
+				bookings.getTicket(),
+//				bookings.getForex()
 				
 		};
 		int rowCOunt=jdbcTemplate.update(INSERT_NEW_BOOKING, parameters);
@@ -53,16 +52,16 @@ public class BookingsRepository implements BookingsRepositoryInterface{
 
 	@Override
 	public Bookings updateBooking(Bookings bookings) {
-		Object[] parameters= {bookings.getHotelName(),
+		Object[] parameters= {
+				bookings.getHotelName(),
 				bookings.getHotelLocation(),
 				bookings.getCheckInTime(),
 				bookings.getCheckOutTime(),
-				bookings.getTransportationMode(),
 				bookings.getBusTicket(),
 				bookings.getTrainPnr(),
 				bookings.getFlightTicket(),
 				bookings.getTicket(),
-				bookings.getForex(),
+//				bookings.getForex(),
 //				bookings.getTravel_Requests(),
 				bookings.getBookingId()};
 		

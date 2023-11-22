@@ -51,35 +51,36 @@ public class BookingsRowMapper implements RowMapper<Bookings>{
         String agentApproval = rs.getString("agent_approval");
         String directorApproval = rs.getString("director_approval");
         double estimate = rs.getDouble("estimate");
-        Blob aadhar = rs.getBlob("aadhar");
-        if(aadhar==null || aadhar.length()<=0)
-        	aadhar=null;
-        Blob passport = rs.getBlob("passport");
-        if(passport==null|| passport.length()<=0)
-        	passport=null;
+        byte[] document = rs.getBytes("document");
+//        if(aadhar==null || aadhar.length()<=0)
+//        	aadhar=null;
+//        Blob passport = rs.getBlob("passport");
+//        if(passport==null|| passport.length()<=0)
+//        	passport=null;
         String documentStatus = rs.getString("document_status");
         Timestamp createdAt = rs.getTimestamp("created_at");
         Timestamp updatedAt = rs.getTimestamp("updated_at");
-		String requestedtransportationMode = rs.getString("transportation_mode");
+		String transportationMode = rs.getString("transportation_mode");
+		double forex=rs.getDouble("forex");
+		String comments=rs.getString("comments");
 
         
-		TravelRequests travel_Requests = new TravelRequests(travelRequestId, employees, boardingPoint, destination, fromDate, toDate, managerApproval, agentApproval, directorApproval, requestedtransportationMode, estimate, aadhar, passport, documentStatus, createdAt, updatedAt);
+		TravelRequests travel_Requests = new TravelRequests(travelRequestId, employees, boardingPoint, destination, fromDate, toDate, managerApproval, agentApproval, directorApproval, estimate, document, documentStatus,transportationMode, createdAt, updatedAt,forex,comments);
 		
 		int bookingId=rs.getInt("booking_id");
 		String hotelName=rs.getString("hotel_name");
 		String hotelLocation=rs.getString("hotel_location");
 		Time checkInTime=rs.getTime("check_in_time");
 		Time checkOutTime=rs.getTime("check_out_time");
-		String transportationMode=rs.getString("transportation_mode");
 		String busTicket=rs.getString("bus_ticket");
 		String flightTicket=rs.getString("flight_ticket");
 		String trainPnr=rs.getString("train_pnr");
 		Blob ticket=rs.getBlob("ticket");
-		double forex=rs.getDouble("forex");
+		
 		
 		if(ticket==null || ticket.length()<=0)
 			ticket=null;
-		Bookings bookings=new Bookings(travel_Requests, bookingId, hotelName, hotelLocation, checkInTime, checkOutTime, transportationMode, flightTicket, busTicket, trainPnr, ticket, forex);
+		Bookings bookings=new Bookings(travel_Requests, bookingId, hotelName, hotelLocation, checkInTime, checkOutTime, flightTicket, busTicket, trainPnr, ticket);
 		
 		return bookings;
 	}

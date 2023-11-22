@@ -22,5 +22,7 @@ public interface TravelRequestRepositoryInterface {
 	 
 	 public List<TravelRequests>getRequestsReadyForBooking();
 	 
+	 public boolean insertFile(TravelRequests travelRequests);
+	 
 	 
 }

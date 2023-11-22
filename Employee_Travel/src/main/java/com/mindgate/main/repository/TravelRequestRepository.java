@@ -15,7 +15,7 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	private JdbcTemplate jdbcTemplate;
 
 //	private static String CREATE_REQUEST_QUERY = "insert into travel_requests values(travel_request_id_sequence.nextVal,?,?,?,?,?,?,?,?,?,empty_blob(),empty_blob(),?,systimestamp,systimestamp)";
-	private static String CREATE_REQUEST_QUERY = "insert into travel_requests values(travel_request_id_sequence.nextVal,?,?,?,?,?,'pending','pending','approved',?,empty_blob(),empty_blob(),?,systimestamp,systimestamp, ?)";
+	private static String CREATE_REQUEST_QUERY = "insert into travel_requests values(travel_request_id_sequence.nextVal,?,?,?,?,?,'pending','pending','approved',?,empty_blob(),?,?,systimestamp,systimestamp, ?,?)";
 	private static String UPDATE_QUERY = "update travel_requests set boarding_point=?,destination=?,from_date=?,to_date=?, manager_approval=?,agent_approval=?,director_approval=?,estimate=?,document_status=?, updated_at= systimestamp where travel_request_id = ?";
 //	private String UPDATE_QUERY_1st = "update travel_requests set ";
 
@@ -31,13 +31,15 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	private static String GET_TRAVEL_REQUEST_BY_AGENT_REJECTED="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval='rejected' and director_approval=?";
 	
 	private static String GET_TRAVEL_REQUESTS_READY_FOR_BOOKING="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval!='pending' and director_approval='approved'";
+	
+	private static String INSERT_BLOB="update travel_requests set document=? where travel_request_id=?";
 
 
 	@Override
 	public boolean createNewTravelRequest(TravelRequests travel_Requests) {
 		Object[] parameters = { travel_Requests.getEmployees().getEmployeeId(), travel_Requests.getBoardingPoint(),
 				travel_Requests.getDestination(), travel_Requests.getFromDate(), travel_Requests.getToDate(),
-				travel_Requests.getEstimate(),travel_Requests.getDocumentStatus(), travel_Requests.getTransportationMode() };
+				travel_Requests.getEstimate(),travel_Requests.getDocumentStatus(), travel_Requests.getTransportationMode(), travel_Requests.getForex(),travel_Requests.getComments()};
 		int rowCount = jdbcTemplate.update(CREATE_REQUEST_QUERY, parameters);
 		if (rowCount > 0)
 			return true;
@@ -137,6 +139,19 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	public List<TravelRequests> getRequestsReadyForBooking() {
 		TravelRequestRowMapper travelRequestRowMapper = new TravelRequestRowMapper();
 		return jdbcTemplate.query(GET_TRAVEL_REQUESTS_READY_FOR_BOOKING, travelRequestRowMapper);
+	}
+
+	@Override
+	public boolean insertFile(TravelRequests travelRequests) {
+		
+		Object[] parameters= {travelRequests.getDocument(), travelRequests.getTravelRequestId()};
+		int rowCount =jdbcTemplate.update(INSERT_BLOB, parameters);
+		if(rowCount>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	

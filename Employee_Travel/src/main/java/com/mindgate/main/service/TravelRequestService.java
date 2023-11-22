@@ -76,4 +76,9 @@ public class TravelRequestService implements TravelRequestServiceInterface {
 	public List<TravelRequests> getRequestsReadyForBooking() {
 		return travelRequestRepository.getRequestsReadyForBooking();
 	}
+
+	@Override
+	public boolean insertFile(TravelRequests travelRequests) {
+		return travelRequestRepository.insertFile(travelRequests);
+	}
 }

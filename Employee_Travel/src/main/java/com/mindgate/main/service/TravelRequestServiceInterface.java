@@ -22,4 +22,6 @@ public interface TravelRequestServiceInterface {
 	 public List<TravelRequests> getTravelRequestsForDirector(String directorApproval);
 	 
 	 public List<TravelRequests> getRequestsReadyForBooking();
+	 
+	 public boolean insertFile(TravelRequests travelRequests);
 }

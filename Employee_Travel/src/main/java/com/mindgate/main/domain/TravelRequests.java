@@ -1,7 +1,7 @@
 package com.mindgate.main.domain;
 
-import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Date;
 
 public class TravelRequests {
@@ -15,22 +15,24 @@ public class TravelRequests {
 	private String managerApproval;
 	private String agentApproval;
 	private String directorApproval;
-	private String transportationMode;
 	private double estimate;
-	private Blob aadhar;
-	private Blob passport;
+	private byte[] document;
 	private String documentStatus;
+	private String transportationMode;
+//	private byte[] passport;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
+	private double forex;
+	private String comments;
 	
 	public TravelRequests() {
-		
+		// TODO Auto-generated constructor stub
 	}
 
 	public TravelRequests(int travelRequestId, Employees employees, String boardingPoint, String destination,
 			Date fromDate, Date toDate, String managerApproval, String agentApproval, String directorApproval,
-			String transportationMode, double estimate, Blob aadhar, Blob passport, String documentStatus,
-			Timestamp createdAt, Timestamp updatedAt) {
+			double estimate, byte[] document, String documentStatus, String transportationMode, Timestamp createdAt,
+			Timestamp updatedAt, double forex, String comments) {
 		super();
 		this.travelRequestId = travelRequestId;
 		this.employees = employees;
@@ -41,13 +43,14 @@ public class TravelRequests {
 		this.managerApproval = managerApproval;
 		this.agentApproval = agentApproval;
 		this.directorApproval = directorApproval;
-		this.transportationMode = transportationMode;
 		this.estimate = estimate;
-		this.aadhar = aadhar;
-		this.passport = passport;
+		this.document = document;
 		this.documentStatus = documentStatus;
+		this.transportationMode = transportationMode;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.forex = forex;
+		this.comments = comments;
 	}
 
 	public int getTravelRequestId() {
@@ -122,14 +125,6 @@ public class TravelRequests {
 		this.directorApproval = directorApproval;
 	}
 
-	public String getTransportationMode() {
-		return transportationMode;
-	}
-
-	public void setTransportationMode(String transportationMode) {
-		this.transportationMode = transportationMode;
-	}
-
 	public double getEstimate() {
 		return estimate;
 	}
@@ -138,20 +133,12 @@ public class TravelRequests {
 		this.estimate = estimate;
 	}
 
-	public Blob getAadhar() {
-		return aadhar;
+	public byte[] getDocument() {
+		return document;
 	}
 
-	public void setAadhar(Blob aadhar) {
-		this.aadhar = aadhar;
-	}
-
-	public Blob getPassport() {
-		return passport;
-	}
-
-	public void setPassport(Blob passport) {
-		this.passport = passport;
+	public void setDocument(byte[] document) {
+		this.document = document;
 	}
 
 	public String getDocumentStatus() {
@@ -160,6 +147,14 @@ public class TravelRequests {
 
 	public void setDocumentStatus(String documentStatus) {
 		this.documentStatus = documentStatus;
+	}
+
+	public String getTransportationMode() {
+		return transportationMode;
+	}
+
+	public void setTransportationMode(String transportationMode) {
+		this.transportationMode = transportationMode;
 	}
 
 	public Timestamp getCreatedAt() {
@@ -178,14 +173,34 @@ public class TravelRequests {
 		this.updatedAt = updatedAt;
 	}
 
+	public double getForex() {
+		return forex;
+	}
+
+	public void setForex(double forex) {
+		this.forex = forex;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
 	@Override
 	public String toString() {
 		return "TravelRequests [travelRequestId=" + travelRequestId + ", employees=" + employees + ", boardingPoint="
 				+ boardingPoint + ", destination=" + destination + ", fromDate=" + fromDate + ", toDate=" + toDate
 				+ ", managerApproval=" + managerApproval + ", agentApproval=" + agentApproval + ", directorApproval="
-				+ directorApproval + ", transportationMode=" + transportationMode + ", estimate=" + estimate
-				+ ", aadhar=" + aadhar + ", passport=" + passport + ", documentStatus=" + documentStatus
-				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+				+ directorApproval + ", estimate=" + estimate + ", document=" + Arrays.toString(document)
+				+ ", documentStatus=" + documentStatus + ", transportationMode=" + transportationMode + ", createdAt="
+				+ createdAt + ", updatedAt=" + updatedAt + ", forex=" + forex + ", comments=" + comments + "]";
 	}
+
+	
+	
+	
 	
 }

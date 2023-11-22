@@ -1,17 +1,23 @@
 package com.mindgate.main.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mindgate.main.domain.TravelRequests;
 import com.mindgate.main.service.TravelRequestServiceInterface;
+
+
+import jakarta.websocket.server.PathParam;
 
 @CrossOrigin("*")
 @RestController
@@ -101,4 +107,33 @@ public class TravelRequestController {
     public List<TravelRequests> getRequestsReadyForBooking(){
     	return travelRequestService.getRequestsReadyForBooking();
     }
+    
+    
+  //http://localhost:8081/travelRequests/upload
+    @RequestMapping(value="upload/{travelRequestId}",method=RequestMethod.POST)
+    public boolean insertFile(@PathParam ("file") MultipartFile file , @PathVariable int travelRequestId) {
+    	
+    	TravelRequests travelRequests=travelRequestService.getTravelRequestById(travelRequestId);
+    	try {
+			travelRequests.setDocument(file.getBytes());
+		} catch (IOException e) {
+			System.out.println("Exception while file upload");
+		}
+    	
+    	return travelRequestService.insertFile(travelRequests);
+    } 
+    
+//    //http://localhost:8081/travelRequests/upload
+//    @RequestMapping(value="upload/{travelRequestId}",method=RequestMethod.POST)
+//    public TravelRequests insertFile(@PathParam ("file") MultipartFile file , @PathVariable int travelRequestId) {
+//    	
+//    	TravelRequests travelRequests=travelRequestService.getTravelRequestById(travelRequestId);
+//    	try {
+//			travelRequests.setDocument(file.getBytes());
+//		} catch (IOException e) {
+//			System.out.println("Exception while file upload");
+//		}
+//    	
+//    	return travelRequestService.updateTravelRequest(travelRequests);
+//    } 
 }

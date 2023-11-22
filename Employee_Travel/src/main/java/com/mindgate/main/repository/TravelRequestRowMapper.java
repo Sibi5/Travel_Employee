@@ -50,21 +50,23 @@ public class TravelRequestRowMapper implements RowMapper<TravelRequests> {
 		String agentApproval = rs.getString("agent_approval");
 		String directorApproval = rs.getString("director_approval");
 		double estimate = rs.getDouble("estimate");
-		Blob aadhar = rs.getBlob("aadhar");
-		Blob passport = rs.getBlob("passport");
+		byte[] document = rs.getBytes("document");
+//		byte[] passport = rs.getBytes("passport");
 		String documentStatus = rs.getString("document_status");
 		Timestamp createdAt = rs.getTimestamp("created_at");
 		Timestamp updatedAt = rs.getTimestamp("updated_at");
 		String transportationMode = rs.getString("transportation_mode");
+		double forex=rs.getDouble("forex");
+		String comments=rs.getString("comments");
 		
-		if(aadhar==null || aadhar.length()<=0) {
-			aadhar = null;
-		}
-		if(passport==null || passport.length()<=0) {
-			passport = null;
-		}
+//		if(aadhar==null || aadhar==null) {
+//			aadhar = null;
+//		}
+//		if(passport==null || passport==null) {
+//			passport = null;
+//		}
 			
-		TravelRequests travel_Requests = new TravelRequests(travelRequestId, employees, boardingPoint, destination, fromDate, toDate, managerApproval, agentApproval, directorApproval, transportationMode, estimate, aadhar, passport, documentStatus, createdAt, updatedAt);
+		TravelRequests travel_Requests = new TravelRequests(travelRequestId, employees, boardingPoint, destination, fromDate, toDate, managerApproval, agentApproval, directorApproval, estimate, document, documentStatus, transportationMode,createdAt, updatedAt,forex,comments);
 //		System.out.println(slab);
 //		System.out.println(employees);
 //		System.out.println(travel_Requests);
