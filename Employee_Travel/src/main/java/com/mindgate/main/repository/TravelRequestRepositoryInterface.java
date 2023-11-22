@@ -12,7 +12,7 @@ public interface TravelRequestRepositoryInterface {
 	public List<TravelRequests> getAllTravelRequests();
 	public boolean deleteTravelRequestById(int travelRequestId);
 	
-	public TravelRequests updateRequest(TravelRequests travel_Requests);
+
 	
 	 public List<TravelRequests>  getTravelRequestByEmployeeId(int employeeId);
 	 

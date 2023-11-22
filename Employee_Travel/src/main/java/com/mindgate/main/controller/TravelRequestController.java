@@ -27,12 +27,7 @@ public class TravelRequestController {
 	@Autowired
 	TravelRequestServiceInterface travelRequestService;
 
-	// UPDATE BY ID PARTIAL UPDATE METHOD (STRING CONCATINATION
-	// http://localhost:8081/travelRequests/requesttest
-	@RequestMapping(value = "requesttest", method = RequestMethod.PUT)
-	public TravelRequests updateRequest(@RequestBody TravelRequests requests) {
-		return travelRequestService.updateRequest(requests);
-	}
+
 
 	// INSERT BY ID
 	// http://localhost:8081/travelRequests/request

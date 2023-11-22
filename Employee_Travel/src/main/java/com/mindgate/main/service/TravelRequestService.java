@@ -40,10 +40,6 @@ public class TravelRequestService implements TravelRequestServiceInterface {
 		return travelRequestRepository.deleteTravelRequestById(travelRequestId);
 	}
 
-	@Override
-	public TravelRequests updateRequest(TravelRequests travel_Requests) {
-		return travelRequestRepository.updateRequest(travel_Requests);
-	}
 	
 	 public List<TravelRequests>  getTravelRequestByEmployeeId(int employeeId) {
 		 return travelRequestRepository.getTravelRequestByEmployeeId(employeeId);

@@ -32,7 +32,7 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	
 	private static String GET_TRAVEL_REQUESTS_READY_FOR_BOOKING="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval!='pending' and director_approval='approved'";
 	
-	private static String INSERT_BLOB="update travel_requests set document=? where travel_request_id=?";
+	private static String INSERT_BLOB="update travel_requests set document=? , document_status='uploaded' where travel_request_id=?";
 
 
 	@Override
@@ -47,38 +47,7 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 			return false;
 	}
 
-	@Override
-	public TravelRequests updateRequest(TravelRequests travel_Requests) {
-		String UPDATE_QUERY_1st = "update travel_requests set ";
-		String UPDATE_QUERY_2st = " updated_at=systimestamp where travel_request_id = ?";
-		if (travel_Requests.getEmployees() != null)
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "employee_id=" + travel_Requests.getEmployees().getEmployeeId() + ",";
-		if (travel_Requests.getBoardingPoint() != null && travel_Requests.getBoardingPoint() != "")
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "boarding_point='" + travel_Requests.getBoardingPoint() + "',";
-		if (travel_Requests.getDestination() != null && travel_Requests.getDestination() != "")
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "destination='" + travel_Requests.getDestination() + "',";
-		if (travel_Requests.getFromDate() != null)
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "from_date=" + travel_Requests.getFromDate() + ",";
-		if (travel_Requests.getToDate() != null)
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "to_date=" + travel_Requests.getToDate() + ",";
-		if (travel_Requests.getManagerApproval() != null && travel_Requests.getManagerApproval() != "")
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "manager_approval='" + travel_Requests.getManagerApproval() + "',";
-		if (travel_Requests.getAgentApproval() != null && travel_Requests.getAgentApproval() != "")
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "agent_approval='" + travel_Requests.getAgentApproval() + "',";
-		if (travel_Requests.getDirectorApproval() != null && travel_Requests.getDirectorApproval() != "")
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "director_approval='" + travel_Requests.getDirectorApproval() + "',";
-		if (Integer.valueOf((int) travel_Requests.getEstimate()) != null)
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "estimate=" + travel_Requests.getEstimate() + ",";
-		if (travel_Requests.getDocumentStatus() != null && travel_Requests.getDocumentStatus() != "")
-			UPDATE_QUERY_1st = UPDATE_QUERY_1st + "document_status='" + travel_Requests.getDocumentStatus() + "',";
-
-		int rowCount = jdbcTemplate.update(UPDATE_QUERY_1st + UPDATE_QUERY_2st, travel_Requests.getTravelRequestId());
-		if (rowCount > 0)
-			return getTravelRequestById(travel_Requests.getTravelRequestId());
-		else
-			return travel_Requests;
-	}
-
+	
 	@Override
 	public TravelRequests updateTravelRequest(TravelRequests travel_Requests) {
 		Object[] parameters = { travel_Requests.getBoardingPoint(), travel_Requests.getDestination(),
