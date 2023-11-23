@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mindgate.main.domain.TravelRequests;
+import com.mindgate.main.repository.TravelRequestRepositoryInterface;
 import com.mindgate.main.service.TravelRequestServiceInterface;
 
 
@@ -26,6 +29,9 @@ public class TravelRequestController {
 
 	@Autowired
 	TravelRequestServiceInterface travelRequestService;
+	
+	@Autowired
+	TravelRequestRepositoryInterface travelRequestRepositoryInterface;
 
 
 
@@ -120,5 +126,14 @@ public class TravelRequestController {
     	return travelRequestService.insertFile(travelRequests);
     } 
     
+    
+    //http://localhost:8081/travelRequests/download/
+    @RequestMapping(value="download/{travelRequestId}")
+    public ResponseEntity<byte[]> getFile(@PathVariable int travelRequestId){
+    	TravelRequests travelRequests=travelRequestRepositoryInterface.getTravelRequestById(travelRequestId);
+    	return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION,  "attachment; filename=\"" + travelRequests.getEmployees().getEmployeeName() +"_Document"+ "\"") 
+				.body(travelRequests.getDocument());
+    }
 
 }

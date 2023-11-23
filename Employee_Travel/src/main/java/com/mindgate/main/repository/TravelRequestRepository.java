@@ -33,6 +33,8 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 	private static String GET_TRAVEL_REQUESTS_READY_FOR_BOOKING="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval!='pending' and director_approval='approved'";
 	
 	private static String INSERT_BLOB="update travel_requests set document=? , document_status='uploaded' where travel_request_id=?";
+	
+//	private static String GET_DOCUMENT_BY_TRAVEL_REQUEST_ID="select * from TRAVEL_REQUESTS where travel_request_id=?";
 
 
 	@Override
@@ -121,9 +123,6 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 		else {
 			return false;
 		}
-	}
-	
-	
-	
+	}	
 
 }
