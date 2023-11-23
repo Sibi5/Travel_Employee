@@ -75,6 +75,8 @@ public class TravelRequestService implements TravelRequestServiceInterface {
 
 	@Override
 	public boolean insertFile(TravelRequests travelRequests) {
+		TravelRequests travelRequests2=travelRequestRepository.getTravelRequestById(travelRequests.getTravelRequestId());
+		travelRequests2.setDocument(travelRequests.getDocument());
 		return travelRequestRepository.insertFile(travelRequests);
 	}
 }

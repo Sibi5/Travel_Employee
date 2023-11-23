@@ -108,7 +108,9 @@ public class TravelRequestController {
     @RequestMapping(value="upload/{travelRequestId}",method=RequestMethod.POST)
     public boolean insertFile(@PathParam ("file") MultipartFile file , @PathVariable int travelRequestId) {
     	
-    	TravelRequests travelRequests=travelRequestService.getTravelRequestById(travelRequestId);
+    	
+    	TravelRequests travelRequests=new TravelRequests();
+    	travelRequests.setTravelRequestId(travelRequestId);
     	try {
 			travelRequests.setDocument(file.getBytes());
 		} catch (IOException e) {
@@ -118,17 +120,5 @@ public class TravelRequestController {
     	return travelRequestService.insertFile(travelRequests);
     } 
     
-//    //http://localhost:8081/travelRequests/upload
-//    @RequestMapping(value="upload/{travelRequestId}",method=RequestMethod.POST)
-//    public TravelRequests insertFile(@PathParam ("file") MultipartFile file , @PathVariable int travelRequestId) {
-//    	
-//    	TravelRequests travelRequests=travelRequestService.getTravelRequestById(travelRequestId);
-//    	try {
-//			travelRequests.setDocument(file.getBytes());
-//		} catch (IOException e) {
-//			System.out.println("Exception while file upload");
-//		}
-//    	
-//    	return travelRequestService.updateTravelRequest(travelRequests);
-//    } 
+
 }
