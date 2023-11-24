@@ -11,5 +11,7 @@ public interface BookingsServiceInterface {
 	public Bookings getBookingByBookingId(int bookingId);
 	public List<Bookings> getAllBookings();
 	public List<Bookings> getBookingsByEmployeeId(int employeeId);
+	
+	public Bookings getBookingByTravelRequestId(int travelRequestId);
 	public boolean insertFile(Bookings bookings);
 }

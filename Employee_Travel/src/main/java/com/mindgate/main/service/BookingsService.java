@@ -53,4 +53,9 @@ public class BookingsService implements BookingsServiceInterface {
 		return bookingsRepositoryInterface.insertFile(bookings2);
 	}
 
+	@Override
+	public Bookings getBookingByTravelRequestId(int travelRequestId) {
+		return bookingsRepositoryInterface.getBookingByTravelRequestId(travelRequestId);
+	}
+
 }

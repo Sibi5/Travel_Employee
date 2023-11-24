@@ -10,6 +10,7 @@ public interface BookingsRepositoryInterface {
 	public Bookings updateBooking(Bookings bookings);
 	public boolean deleteBookingByBookingId(int bookingId);
 	public Bookings getBookingByBookingId(int bookingId);
+	public Bookings getBookingByTravelRequestId(int travelRequestId);
 	public List<Bookings> getAllBookings();
 	public List<Bookings> getBookingsByEmployeeId(int employeeId);
 	public boolean insertFile(Bookings bookings2);

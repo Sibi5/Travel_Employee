@@ -71,8 +71,8 @@ public class BookingsController {
 			return bookingsServiceInterface.getBookingsByEmployeeId(employeeId);
 		}
 		
-		//http://localhost:8081/bookingsapi/booking/download/
-	    @RequestMapping(value="download/{bookingId}")
+		//http://localhost:8081/bookingsapi/download/
+	    @RequestMapping(value="booking/download/{bookingId}")
 	    public ResponseEntity<byte[]> getFile(@PathVariable int bookingId){
 	    	Bookings bookings=bookingsServiceInterface.getBookingByBookingId(bookingId);
 	    	return ResponseEntity.ok()
@@ -80,13 +80,15 @@ public class BookingsController {
 					.body(bookings.getTicket());
 	    }
 	    
-	  //http://localhost:8081/bookingsapi/bookings/upload
-	    @RequestMapping(value="bookings/{bookingId}",method=RequestMethod.POST)
-	    public boolean insertFileBookings(@PathParam ("file") MultipartFile file , @PathVariable int bookingId) {
+	  //http://localhost:8081/bookingsapi/uploadTicket/
+	    @RequestMapping(value="uploadTicket/{travelRequestId}",method=RequestMethod.POST)
+	    public boolean insertFileBookings(@PathParam ("file") MultipartFile file , @PathVariable int travelRequestId) {
 	    	
 	    	
 	    	Bookings bookings=new Bookings();
-	    	bookings.setBookingId(bookingId);
+	    	TravelRequests travelRequests = new TravelRequests();
+	    	travelRequests.setTravelRequestId(travelRequestId);
+	    	bookings.setTravelRequests(travelRequests);
 	    	try {
 	    		bookings.setTicket(file.getBytes());
 			} catch (IOException e) {
@@ -95,4 +97,10 @@ public class BookingsController {
 	    	
 	    	return bookingsServiceInterface.insertFile(bookings);
 	    } 
+	    
+	  //http://localhost:8081/bookingsapi/getbookings/20
+		@RequestMapping(value="getbookings/{travelRequestId}",method = RequestMethod.GET)
+		public Bookings getBookingByRquestId(@PathVariable int travelRequestId) {
+			return bookingsServiceInterface.getBookingByTravelRequestId(travelRequestId);
+		}
 }
