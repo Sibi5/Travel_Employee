@@ -68,7 +68,9 @@ public class BookingsService implements BookingsServiceInterface {
 	@Override
 	public boolean sendMail(int travelRequestId) {
 		Bookings bookings=bookingsRepositoryInterface.getBookingByTravelRequestId(travelRequestId);
+		
 		String msg="your booking has been confirmed,please check your portal for more information";
+		try {
 		 SimpleMailMessage message = new SimpleMailMessage();
 	     	message.setFrom("fromemail@gmail.com");
 	        message.setTo(bookings.getTravelRequests().getEmployees().getEmail());
@@ -76,9 +78,13 @@ public class BookingsService implements BookingsServiceInterface {
 	        message.setText(bookings.getTravelRequests().getEmployees().getEmployeeName());
 	        message.setSubject("Bookings Confirmed");
 	        mailSender.send(message);
-	      
+	        return true;
+		}
+		catch(Exception e) {
+			System.out.println(e);
+			return false;
+		}
 		
-		return(true);
 		
 		
 	}
