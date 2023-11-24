@@ -1,5 +1,6 @@
 package com.mindgate.main.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mindgate.main.domain.Bookings;
 import com.mindgate.main.domain.TravelRequests;
 import com.mindgate.main.service.BookingsServiceInterface;
+
+import jakarta.websocket.server.PathParam;
 
 @CrossOrigin("*")
 @RestController
@@ -75,4 +79,20 @@ public class BookingsController {
 					.header(HttpHeaders.CONTENT_DISPOSITION,  "attachment; filename=\"" + bookings.getTravelRequests().getTransportationMode() +"_ticket"+ "\"") 
 					.body(bookings.getTicket());
 	    }
+	    
+	  //http://localhost:8081/bookingsapi/bookings/upload
+	    @RequestMapping(value="bookings/{bookingId}",method=RequestMethod.POST)
+	    public boolean insertFileBookings(@PathParam ("file") MultipartFile file , @PathVariable int bookingId) {
+	    	
+	    	
+	    	Bookings bookings=new Bookings();
+	    	bookings.setBookingId(bookingId);
+	    	try {
+	    		bookings.setTicket(file.getBytes());
+			} catch (IOException e) {
+				System.out.println("Exception while file upload");
+			}
+	    	
+	    	return bookingsServiceInterface.insertFile(bookings);
+	    } 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mindgate.main.domain.Bookings;
+import com.mindgate.main.domain.TravelRequests;
 import com.mindgate.main.repository.BookingsRepositoryInterface;
 
 @Service
@@ -43,6 +44,13 @@ public class BookingsService implements BookingsServiceInterface {
 	public List<Bookings> getBookingsByEmployeeId(int employeeId) {
 		// TODO Auto-generated method stub
 		return bookingsRepositoryInterface.getBookingsByEmployeeId(employeeId);
+	}
+
+	@Override
+	public boolean insertFile(Bookings bookings) {
+		Bookings bookings2=bookingsRepositoryInterface.getBookingByBookingId(bookings.getBookingId());
+		bookings2.setTicket(bookings.getTicket());
+		return bookingsRepositoryInterface.insertFile(bookings2);
 	}
 
 }

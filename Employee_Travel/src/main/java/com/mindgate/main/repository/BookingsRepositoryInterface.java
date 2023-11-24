@@ -12,4 +12,5 @@ public interface BookingsRepositoryInterface {
 	public Bookings getBookingByBookingId(int bookingId);
 	public List<Bookings> getAllBookings();
 	public List<Bookings> getBookingsByEmployeeId(int employeeId);
+	public boolean insertFile(Bookings bookings2);
 }

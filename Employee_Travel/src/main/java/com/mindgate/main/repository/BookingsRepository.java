@@ -25,6 +25,9 @@ public class BookingsRepository implements BookingsRepositoryInterface{
 	private final static String SELECT_ONE_BOOKING = "select * from BOOKINGS join TRAVEL_REQUESTS using (TRAVEL_REQUEST_ID) join EMPLOYEES using (employee_id) join SLAB using (slab_id) where BOOKING_ID=?";
 	private final static String SELECT_ALL_BOOKING_USING_EMPLOYEE_ID = "select * from BOOKINGS join TRAVEL_REQUESTS using (TRAVEL_REQUEST_ID) join EMPLOYEES using (employee_id) join SLAB using (slab_id) where employee_id=?";
 	
+	private static String INSERT_BLOB="update BOOKINGS set ticket=? where booking_id=?";
+
+	
 	@Override
 	public boolean addNewBooking(Bookings bookings) {
 		System.out.println(bookings);
@@ -98,6 +101,19 @@ public class BookingsRepository implements BookingsRepositoryInterface{
 	public List<Bookings> getBookingsByEmployeeId(int employeeId) {
 		BookingsRowMapper bookingsRowMapper=new BookingsRowMapper();	
 		return jdbcTemplate.query(SELECT_ALL_BOOKING_USING_EMPLOYEE_ID, bookingsRowMapper, employeeId);
+	}
+
+	@Override
+	public boolean insertFile(Bookings bookings2) {
+
+		Object[] parameters= {bookings2.getTicket(), bookings2.getBookingId()};
+		int rowCount =jdbcTemplate.update(INSERT_BLOB, parameters);
+		if(rowCount>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 }
