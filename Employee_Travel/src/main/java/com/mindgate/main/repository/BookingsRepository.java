@@ -23,20 +23,21 @@ public class BookingsRepository implements BookingsRepositoryInterface{
 	private final static String SELECT_ALL_BOOKING = "select * from BOOKINGS join TRAVEL_REQUESTS using (TRAVEL_REQUEST_ID) join EMPLOYEES using (employee_id) join SLAB using (slab_id)";
     
 	private final static String SELECT_ONE_BOOKING = "select * from BOOKINGS join TRAVEL_REQUESTS using (TRAVEL_REQUEST_ID) join EMPLOYEES using (employee_id) join SLAB using (slab_id) where BOOKING_ID=?";
-
+	private final static String SELECT_ALL_BOOKING_USING_EMPLOYEE_ID = "select * from BOOKINGS join TRAVEL_REQUESTS using (TRAVEL_REQUEST_ID) join EMPLOYEES using (employee_id) join SLAB using (slab_id) where employee_id=?";
+	
 	@Override
 	public boolean addNewBooking(Bookings bookings) {
-
+		System.out.println(bookings);
 		Object[] parameters= {
-				bookings.getTravel_Requests().getTravelRequestId(),
+				bookings.getTravelRequests().getTravelRequestId(),
 				bookings.getHotelName(),
 				bookings.getHotelLocation(),
 				bookings.getCheckInTime(),
 				bookings.getCheckOutTime(),
 				bookings.getFlightTicket(),
 				bookings.getBusTicket(),
-				bookings.getTrainPnr(),
-				bookings.getTicket(),
+				bookings.getTrainPnr()
+//				bookings.getTicket(),
 //				bookings.getForex()
 				
 		};
@@ -91,6 +92,12 @@ public class BookingsRepository implements BookingsRepositoryInterface{
 	public Bookings getBookingByBookingId(int bookingId) {
 		BookingsRowMapper bookingsRowMapper=new BookingsRowMapper();	
 		return jdbcTemplate.queryForObject(SELECT_ONE_BOOKING,bookingsRowMapper, bookingId);
+	}
+
+	@Override
+	public List<Bookings> getBookingsByEmployeeId(int employeeId) {
+		BookingsRowMapper bookingsRowMapper=new BookingsRowMapper();	
+		return jdbcTemplate.query(SELECT_ALL_BOOKING_USING_EMPLOYEE_ID, bookingsRowMapper, employeeId);
 	}
 	
 }

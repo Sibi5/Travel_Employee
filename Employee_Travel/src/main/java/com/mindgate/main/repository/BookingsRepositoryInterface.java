@@ -11,4 +11,5 @@ public interface BookingsRepositoryInterface {
 	public boolean deleteBookingByBookingId(int bookingId);
 	public Bookings getBookingByBookingId(int bookingId);
 	public List<Bookings> getAllBookings();
+	public List<Bookings> getBookingsByEmployeeId(int employeeId);
 }

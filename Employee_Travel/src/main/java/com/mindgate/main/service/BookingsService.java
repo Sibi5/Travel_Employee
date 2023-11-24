@@ -39,4 +39,10 @@ public class BookingsService implements BookingsServiceInterface {
 		return bookingsRepositoryInterface.getAllBookings();
 	}
 
+	@Override
+	public List<Bookings> getBookingsByEmployeeId(int employeeId) {
+		// TODO Auto-generated method stub
+		return bookingsRepositoryInterface.getBookingsByEmployeeId(employeeId);
+	}
+
 }

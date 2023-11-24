@@ -3,6 +3,8 @@ package com.mindgate.main.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mindgate.main.domain.Bookings;
+import com.mindgate.main.domain.TravelRequests;
 import com.mindgate.main.service.BookingsServiceInterface;
 
 @CrossOrigin("*")
@@ -56,4 +59,20 @@ public class BookingsController {
 	public List<Bookings> getAllBookings(){
 		return bookingsServiceInterface.getAllBookings();
 	}
+	
+	
+	//http://localhost:8081/bookingsapi/bookingsList/2
+		@RequestMapping(value="bookingsList/{employeeId}",method = RequestMethod.GET)
+		public List<Bookings> getBookingsByEmployeeId(@PathVariable int employeeId){
+			return bookingsServiceInterface.getBookingsByEmployeeId(employeeId);
+		}
+		
+		//http://localhost:8081/bookingsapi/booking/download/
+	    @RequestMapping(value="download/{bookingId}")
+	    public ResponseEntity<byte[]> getFile(@PathVariable int bookingId){
+	    	Bookings bookings=bookingsServiceInterface.getBookingByBookingId(bookingId);
+	    	return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION,  "attachment; filename=\"" + bookings.getTravelRequests().getTransportationMode() +"_ticket"+ "\"") 
+					.body(bookings.getTicket());
+	    }
 }

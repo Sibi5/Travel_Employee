@@ -65,22 +65,22 @@ public class BookingsRowMapper implements RowMapper<Bookings>{
 		String comments=rs.getString("comments");
 
         
-		TravelRequests travel_Requests = new TravelRequests(travelRequestId, employees, boardingPoint, destination, fromDate, toDate, managerApproval, agentApproval, directorApproval, estimate, document, documentStatus,transportationMode, createdAt, updatedAt,forex,comments);
+		TravelRequests travelRequests = new TravelRequests(travelRequestId, employees, boardingPoint, destination, fromDate, toDate, managerApproval, agentApproval, directorApproval, estimate, document, documentStatus,transportationMode, createdAt, updatedAt,forex,comments);
 		
 		int bookingId=rs.getInt("booking_id");
 		String hotelName=rs.getString("hotel_name");
 		String hotelLocation=rs.getString("hotel_location");
-		Time checkInTime=rs.getTime("check_in_time");
-		Time checkOutTime=rs.getTime("check_out_time");
+		String checkInTime=rs.getString("check_in_time");
+		String checkOutTime=rs.getString("check_out_time");
 		String busTicket=rs.getString("bus_ticket");
 		String flightTicket=rs.getString("flight_ticket");
 		String trainPnr=rs.getString("train_pnr");
-		Blob ticket=rs.getBlob("ticket");
+		byte[] ticket=rs.getBytes("ticket");
 		
 		
-		if(ticket==null || ticket.length()<=0)
-			ticket=null;
-		Bookings bookings=new Bookings(travel_Requests, bookingId, hotelName, hotelLocation, checkInTime, checkOutTime, flightTicket, busTicket, trainPnr, ticket);
+//		if(ticket==null || ticket.length()<=0)
+//			ticket=null;
+		Bookings bookings=new Bookings(travelRequests, bookingId, hotelName, hotelLocation, checkInTime, checkOutTime, flightTicket, busTicket, trainPnr, ticket);
 		
 		return bookings;
 	}
