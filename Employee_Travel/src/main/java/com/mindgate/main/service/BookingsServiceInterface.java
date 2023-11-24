@@ -14,4 +14,5 @@ public interface BookingsServiceInterface {
 	
 	public Bookings getBookingByTravelRequestId(int travelRequestId);
 	public boolean insertFile(Bookings bookings);
+	public boolean sendMail(int travelRequestId);
 }

@@ -103,4 +103,9 @@ public class BookingsController {
 		public Bookings getBookingByRquestId(@PathVariable int travelRequestId) {
 			return bookingsServiceInterface.getBookingByTravelRequestId(travelRequestId);
 		}
+		
+		@RequestMapping(value="mail/{travelRequestId}",method=RequestMethod.GET)
+		public boolean sendMail(@PathVariable int travelRequestId) {
+			return bookingsServiceInterface.sendMail(travelRequestId);
+		}
 }
