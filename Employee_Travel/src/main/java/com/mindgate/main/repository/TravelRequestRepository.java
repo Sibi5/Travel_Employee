@@ -20,17 +20,17 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
 //	private String UPDATE_QUERY_1st = "update travel_requests set ";
 
 //	private String UPDATE_QUERY_2st = " updated_at=systimestamp where travel_request_id = ?";
-	private static String GET_REQUEST_QUERY = "select * from TRAVEL_REQUESTS t inner join employees e on t.EMPLOYEE_ID = e.employee_id inner join slab s  on e.slab_id = s.SLAB_ID and t.TRAVEL_REQUEST_ID=?";
-	private static String GET_ALL_REQUESTS_QUERY = "select * from TRAVEL_REQUESTS inner join EMPLOYEES e on travel_requests.employee_id = e.EMPLOYEE_ID inner join SLAB s on s.SLAB_ID = e.SLAB_ID";
+	private static String GET_REQUEST_QUERY = "select * from TRAVEL_REQUESTS t inner join employees e on t.EMPLOYEE_ID = e.employee_id inner join slab s  on e.slab_id = s.SLAB_ID and t.TRAVEL_REQUEST_ID=? order by t.updated_at desc";
+	private static String GET_ALL_REQUESTS_QUERY = "select * from TRAVEL_REQUESTS inner join EMPLOYEES e on travel_requests.employee_id = e.EMPLOYEE_ID inner join SLAB s on s.SLAB_ID = e.SLAB_ID order by travel_requests.updated_at desc";
 	private static String DELETE_QUERY = "delete from travel_requests where travel_request_id=?";
 	
-	private static String GET_TRAVEL_REQUEST_BY_EMPLOYEE_ID="select * from TRAVEL_REQUESTS join EMPLOYEES using (EMPLOYEE_ID) join SLAB using (SLAB_ID) where EMPLOYEE_ID=?";
+	private static String GET_TRAVEL_REQUEST_BY_EMPLOYEE_ID="select * from TRAVEL_REQUESTS join EMPLOYEES using (EMPLOYEE_ID) join SLAB using (SLAB_ID) where EMPLOYEE_ID=? order by updated_at desc";
 	
-	private static String GET_TRAVEL_REQUEST_BY_MANAGER_APPROAL="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where manager_approval='approved' and agent_approval=?";
+	private static String GET_TRAVEL_REQUEST_BY_MANAGER_APPROAL="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where manager_approval='approved' and agent_approval=? order by updated_at desc";
 	
-	private static String GET_TRAVEL_REQUEST_BY_AGENT_REJECTED="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval='rejected' and director_approval=?";
+	private static String GET_TRAVEL_REQUEST_BY_AGENT_REJECTED="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval='rejected' and director_approval=? order by updated_at desc";
 	
-	private static String GET_TRAVEL_REQUESTS_READY_FOR_BOOKING="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval!='pending' and director_approval='approved' and comments!='booked'";
+	private static String GET_TRAVEL_REQUESTS_READY_FOR_BOOKING="select * from TRAVEL_REQUESTS join Employees using (employee_Id) join Slab using (slab_id) where agent_approval!='pending' and director_approval='approved' and comments!='booked' order by updated_at desc";
 	
 	private static String INSERT_BLOB="update travel_requests set document=? , document_status='uploaded' where travel_request_id=?";
 	

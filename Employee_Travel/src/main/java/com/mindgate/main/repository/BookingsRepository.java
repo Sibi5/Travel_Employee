@@ -28,7 +28,7 @@ public class BookingsRepository implements BookingsRepositoryInterface {
 
 	private final static String SELECT_ALL_BOOKING_USING_EMPLOYEE_ID = "select * from BOOKINGS join TRAVEL_REQUESTS using (TRAVEL_REQUEST_ID) join EMPLOYEES using (employee_id) join SLAB using (slab_id) where employee_id=?";
 
-	private static String INSERT_BLOB = "update BOOKINGS set ticket=? where travel_request_id=?";
+	private final static String INSERT_BLOB = "update BOOKINGS set ticket=? where travel_request_id=?";
 
 	@Override
 	public boolean addNewBooking(Bookings bookings) {
