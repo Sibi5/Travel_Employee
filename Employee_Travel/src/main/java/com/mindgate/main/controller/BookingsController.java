@@ -71,7 +71,7 @@ public class BookingsController {
 			return bookingsServiceInterface.getBookingsByEmployeeId(employeeId);
 		}
 		
-		//http://localhost:8081/bookingsapi/download/
+		//http://localhost:8081/bookingsapi/booking/download/78
 	    @RequestMapping(value="booking/download/{bookingId}")
 	    public ResponseEntity<byte[]> getFile(@PathVariable int bookingId){
 	    	Bookings bookings=bookingsServiceInterface.getBookingByBookingId(bookingId);
